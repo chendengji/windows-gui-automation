@@ -98,6 +98,7 @@ cr show WPS/导出pdf                                   # 查看步骤与流程�
 cr play WPS/导出pdf --dry-run                         # 预览（首跑必做）
 cr play WPS/导出pdf --param user=bob
 cr upgrade WPS/导出pdf                                 # 固化成 .py 入库
+cr run WPS/导出pdf --dry-run                           # 运行已固化脚本（自动用工具所在 Python）
 cr rebase WPS/导出pdf                                  # 坐标改造（换显示器前）
 ```
 

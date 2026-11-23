@@ -1,4 +1,4 @@
-# gui-automation-skill — Windows GUI 自动化的**决策层**技能包
+# windows-gui-automation — Windows GUI 自动化的**决策层**技能包
 
 社区项目大多在做**技术层面**的 GUI 操作（点击、输入、读屏），很少有人做**决策层面**：
 agent 面对不同软件和任务，不知道**该用什么工具、走什么操作流程**。本包补的就是这一层。
@@ -47,9 +47,9 @@ key = `<软件>/<场景>`。索引项含软件名、窗口标题、坐标模式�
 
 ```bash
 # 1) 工具：把 tools/click-recorder 放到任意稳定位置
-cp -r tools/click-recorder ~/Dev/click-recorder
+cp -r tools/click-recorder ~/Dev/tools/click-recorder
 #    搬家只需设环境变量，已固化的脚本同样生效
-export CLICK_RECORDER_HOME=$HOME/Dev/click-recorder
+export CLICK_RECORDER_HOME=$HOME/Dev/tools/click-recorder
 
 # 2) 启动器：放任意在 PATH 里的目录（例 ~/.pi/agent/scripts）
 install -m755 launchers/click-recorder ~/.pi/agent/scripts/click-recorder

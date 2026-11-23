@@ -26,6 +26,7 @@ import argparse
 import json
 import os
 import re
+import subprocess
 import sys
 import time
 
@@ -354,6 +355,28 @@ def cmd_play(args) -> None:
     replay(m, dry_run=args.dry_run, speed=args.speed, params=params or None)
 
 
+def cmd_run(args) -> None:
+    """运行已固化的编排脚本。
+
+    用**本工具所在的 Python**（sys.executable）执行，避免系统 Python 缺依赖
+    （pyautogui/win32api 等只在 click-recorder 的 .venv 里）。脚本内已插好项目根，无需设环境。
+    """
+    key = _resolve_key(args.name)
+    script = macro_script_path(key)
+    if not os.path.exists(script):
+        print(f"[错误] 未找到固化脚本（{script}）。先执行 upgrade {key} 固化。", file=sys.stderr)
+        sys.exit(1)
+    extra = []
+    if args.dry_run:
+        extra.append("--dry-run")
+    if args.speed and args.speed != 1.0:
+        extra += ["--speed", str(args.speed)]
+    for kv in (args.param or []):
+        extra += ["--param", kv]
+    rc = subprocess.call([sys.executable, script] + extra)
+    sys.exit(rc)
+
+
 def cmd_upgrade(args) -> None:
     """从宏 JSON + 人工叙述生成参数化 Python 编排脚本（固化入库，不散落）。"""
     key = _resolve_key(args.name)
@@ -565,6 +588,13 @@ def build_parser() -> argparse.ArgumentParser:
     u.add_argument("name")
     u.add_argument("-o", "--output", help="输出脚本路径（默认入库到 <场景>.py）")
     u.set_defaults(fn=cmd_upgrade)
+
+    rn = sub.add_parser("run", help="运行已固化的编排脚本（自动用工具所在的 Python）")
+    rn.add_argument("name")
+    rn.add_argument("--dry-run", action="store_true", help="只打印步骤不实际点击")
+    rn.add_argument("--speed", type=float, default=1.0, help="速度倍率")
+    rn.add_argument("--param", action="append", metavar="K=V", help="运行时参数（可多次）")
+    rn.set_defaults(fn=cmd_run)
 
     rb = sub.add_parser("rebase", help="坐标改造：exact → normalized（跨显示器/分辨率）")
     rb.add_argument("name")
