@@ -56,25 +56,25 @@
 ## 使用
 
 ```bash
-# click-recorder 项目根（本机实际位置；不在则按 pip 安装或自行 clone）
-cd ~/Documents/literature-review/tmp/click-recorder
+# 统一用启动器（与当前目录无关；CLICK_RECORDER_HOME 可覆盖安装位置）
+alias cr='bash ~/.pi/agent/scripts/click-recorder'   # 与目录无关
 
 # 录制入库（统一命名：软件名 + 场景名）
-uv run python -m click_recorder.cli record --software 示例软件 --scene 导出pdf
+cr record --software 示例软件 --scene 导出pdf
 # 录制（按标题关键词指定目标窗口，列出候选供选）
-uv run python -m click_recorder.cli record --software 示例软件 --scene 导出pdf --window "目标软件"
+cr record --software 示例软件 --scene 导出pdf --window "目标软件"
 
 # 录制过程中：声明参数 → 左键点击输入按钮名（回车跳过）→ F9 结束 → 叙述流程线路与逻辑（q 跳过）
 
-uv run python -m click_recorder.cli list                          # 列出脚本库全部条目
-uv run python -m click_recorder.cli search 导出                   # 按关键词检索（软件/场景/窗口/叙述/参数）
-uv run python -m click_recorder.cli show 示例软件/导出pdf           # 查看步骤与流程叙述（参数值自动掩码）
-uv run python -m click_recorder.cli play 示例软件/导出pdf --dry-run  # 只预览（首跑必做）
-uv run python -m click_recorder.cli play 示例软件/导出pdf --speed 2
-uv run python -m click_recorder.cli play 示例软件/导出pdf --param user=bob   # 运行时注入参数
-uv run python -m click_recorder.cli upgrade 示例软件/导出pdf         # 固化成 .py 入库
-uv run python -m click_recorder.cli rebase 示例软件/导出pdf          # 坐标改造（换显示器前）
-uv run python -m click_recorder.cli rebase 示例软件/导出pdf --from "0,0,1920,1080"  # 指定旧窗口矩形
+cr list                          # 列出脚本库全部条目
+cr search 导出                   # 按关键词检索（软件/场景/窗口/叙述/参数）
+cr show 示例软件/导出pdf           # 查看步骤与流程叙述（参数值自动掩码）
+cr play 示例软件/导出pdf --dry-run  # 只预览（首跑必做）
+cr play 示例软件/导出pdf --speed 2
+cr play 示例软件/导出pdf --param user=bob   # 运行时注入参数
+cr upgrade 示例软件/导出pdf         # 固化成 .py 入库
+cr rebase 示例软件/导出pdf          # 坐标改造（换显示器前）
+cr rebase 示例软件/导出pdf --from "0,0,1920,1080"  # 指定旧窗口矩形
 ```
 
 **重放能力**（均在 JSON 里声明，player 运行时执行）：
