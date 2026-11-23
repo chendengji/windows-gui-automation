@@ -6,7 +6,7 @@
 #   2. 默认安装位置
 #
 # 用法： click-recorder record|list|search|show|play|upgrade|rebase [参数]
-ROOT="${CLICK_RECORDER_HOME:-$HOME/Documents/literature-review/tmp/click-recorder}"
+ROOT="${CLICK_RECORDER_HOME:-$HOME/Dev/click-recorder}"
 if [ ! -d "$ROOT" ]; then
   echo "错误：未找到 click-recorder 项目根：$ROOT" >&2
   echo "请设置环境变量 CLICK_RECORDER_HOME 指向实际安装位置。" >&2
